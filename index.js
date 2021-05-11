@@ -3,13 +3,12 @@ const readline = require("readline");
 const rp = require("request-promise");
 const fetch = require("node-fetch");
 
-let more = true;
 async function takeInput() {
+  let more = true;
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-
   rl.question("What Coin Would You Like To Search For? ", async (answer) => {
     console.log(`Searching for ${answer}...`);
     const value = await getCoin(answer).then((res) => {
@@ -17,9 +16,6 @@ async function takeInput() {
       return Math.round(price * 100) / 100;
     });
     console.log(`The price of ${answer} is currently ${value}`);
-  });
-
-  rl.on("line", (input) => {
     rl.close();
   });
 }
