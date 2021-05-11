@@ -14,47 +14,33 @@ async function takeInput() {
     const value = await getCoin(answer);
     console.log(`The price of ${answer} is currently ${value}`);
   });
-  // rl.close();
+  rl.on("line", (input) => {
+    console.log("Closing....");
+    rl.close();
+  });
 }
 
-// const getCoin = async (query) => {
-//   const requestOptions = {
-//     method: "GET",
-//     uri: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest",
-//     qs: {
-//       symbol: query,
-//     },
-//     headers: {
-//       "X-CMC_PRO_API_KEY": apikey,
-//     },
-//     json: true,
-//     gzip: true,
-//   };
-
-//   await rp(requestOptions)
-//     .then((response) => {
-//       const { price } = response.data[query.toUpperCase()].quote.USD;
-//       return price;
-//     })
-//     .catch((err) => {
-//       console.log("API call error:", err.message);
-//     });
-// };
-
+// working
 async function getCoin(query) {
   const apiKey = "b9968c2b-c365-457e-b409-f39d7bdb0acd";
   const url =
     "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
-  let qString = "?CMC_PRO_API_KEY=" + apiKey + "&symbol=DOGE";
+  let qString = "?CMC_PRO_API_KEY=" + apiKey + `&symbol=${query.toUpperCase()}`;
   const response = await fetch(url + qString);
   const json = await response.json();
   const price = json.data.DOGE.quote.USD.price;
   return price;
-  //       .then((res) => await res.json())
-  //     .then((json) => {
-  //       const { price } = json.data.DOGE.quote.USD;
-  //       return price;
-  //     });
-  //   return response;
 }
+
+// refactor
+async function getCoin(query) {
+    const apiKey = "b9968c2b-c365-457e-b409-f39d7bdb0acd";
+    const url =
+      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
+    let qString = "?CMC_PRO_API_KEY=" + apiKey + `&symbol=${query.toUpperCase()}`;
+    const response = await fetch(url + qString);
+    const json = await response.json();
+    const price = json.data.DOGE.quote.USD.price;
+    return price;
+  }
 takeInput();
