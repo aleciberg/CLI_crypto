@@ -37,9 +37,9 @@ async function takeInput() {
       });
     });
     console.log(
-      `The ${chalk.blue(`price`)} of ${chalk.magenta(answer)} is currently ${
-        value.price
-      }`
+      `The ${chalk.blue(`price`)} of ${chalk.magenta(
+        answer
+      )} is currently ${chalk.yellow(value.price)}`
     );
     console.log(
       `The ${chalk.blue(`1 hour change`)} of ${chalk.magenta(
@@ -54,7 +54,7 @@ async function takeInput() {
     console.log(
       `The ${chalk.blue(`7 day change`)} of ${chalk.magenta(
         answer
-      )}is currently ${chalk.red(value.dayChange + `%`)}`
+      )} is currently ${chalk.red(value.sevenDayChange + `%`)}`
     );
     console.log(
       `The ${chalk.blue(`30 day change`)} of ${chalk.magenta(
