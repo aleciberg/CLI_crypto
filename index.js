@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 const readline = require("readline");
-const rp = require("request-promise");
 const fetch = require("node-fetch");
+const helpers = require("./helpers");
+const chalk = require("chalk");
 
 async function takeInput() {
   let more = true;
@@ -10,12 +11,56 @@ async function takeInput() {
     output: process.stdout,
   });
   rl.question("What Coin Would You Like To Search For? ", async (answer) => {
-    console.log(`Searching for ${answer}...`);
+    console.log("Searching for " + chalk.magenta(`${answer}`));
+    console.log("\n");
     const value = await getCoin(answer).then((res) => {
-      const { price } = res.data[answer.toUpperCase()].quote.USD;
-      return Math.round(price * 100) / 100;
+      return (collection = {
+        price:
+          Math.round(res.data[answer.toUpperCase()].quote.USD.price * 100) /
+          100,
+        oneHourChange: helpers.round(
+          res.data[answer.toUpperCase()].quote.USD.percent_change_1h,
+          2
+        ),
+        dayChange: helpers.round(
+          res.data[answer.toUpperCase()].quote.USD.percent_change_24h,
+          2
+        ),
+        sevenDayChange: helpers.round(
+          res.data[answer.toUpperCase()].quote.USD.percent_change_7d,
+          2
+        ),
+        thirtyDayChange: helpers.round(
+          res.data[answer.toUpperCase()].quote.USD.percent_change_30d,
+          2
+        ),
+      });
     });
-    console.log(`The price of ${answer} is currently ${value}`);
+    console.log(
+      `The ${chalk.blue(`price`)} of ${chalk.magenta(answer)} is currently ${
+        value.price
+      }`
+    );
+    console.log(
+      `The ${chalk.blue(`1 hour change`)} of ${chalk.magenta(
+        answer
+      )} is currently ${chalk.red(value.oneHourChange + `%`)}`
+    );
+    console.log(
+      `The ${chalk.blue(`day change`)} of ${chalk.magenta(
+        answer
+      )} is currently ${chalk.red(value.dayChange + `%`)}`
+    );
+    console.log(
+      `The ${chalk.blue(`7 day change`)} of ${chalk.magenta(
+        answer
+      )}is currently ${chalk.red(value.dayChange + `%`)}`
+    );
+    console.log(
+      `The ${chalk.blue(`30 day change`)} of ${chalk.magenta(
+        answer
+      )} is currently ${chalk.red(value.thirtyDayChange + `%`)}`
+    );
     rl.close();
   });
 }
