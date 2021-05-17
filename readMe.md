@@ -8,6 +8,7 @@
 
 ## ToDo
 
+- Color Code Percent Changes
 - Handle anything besides symbols.
 - Return more than just latest quote
   - Percent Change
