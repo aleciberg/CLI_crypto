@@ -4,6 +4,10 @@ const fetch = require("node-fetch");
 const helpers = require("./helpers");
 const chalk = require("chalk");
 
+// Need to refactor this function, way too long and messy
+// break out value collection from API?
+// function for chalk formatting?
+
 async function takeInput() {
   let more = true;
   const rl = readline.createInterface({
