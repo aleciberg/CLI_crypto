@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-const readline = require("readline");
-const fetch = require("node-fetch");
-const helpers = require("./helpers");
-const chalk = require("chalk");
+const readline = require('readline');
+const fetch = require('node-fetch');
+const helpers = require('./helpers');
+const chalk = require('chalk');
+const axios = require('axios');
 
 // Need to refactor this function, way too long and messy
 // break out value collection from API?
@@ -14,9 +15,9 @@ async function takeInput() {
     input: process.stdin,
     output: process.stdout,
   });
-  rl.question("What Coin Would You Like To Search For? ", async (answer) => {
-    console.log("Searching for " + chalk.magenta(`${answer}`));
-    console.log("\n");
+  rl.question('What Coin Would You Like To Search For? ', async (answer) => {
+    console.log('Searching for ' + chalk.magenta(`${answer}`));
+    console.log('\n');
     const value = await getCoin(answer).then((res) => {
       return (collection = {
         price:
@@ -70,10 +71,10 @@ async function takeInput() {
 }
 
 async function getCoin(query) {
-  const apiKey = "b9968c2b-c365-457e-b409-f39d7bdb0acd";
+  const apiKey = 'b9968c2b-c365-457e-b409-f39d7bdb0acd';
   const url =
-    "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
-  let qString = "?CMC_PRO_API_KEY=" + apiKey + `&symbol=${query.toUpperCase()}`;
+    'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
+  let qString = '?CMC_PRO_API_KEY=' + apiKey + `&symbol=${query.toUpperCase()}`;
   const response = await fetch(url + qString);
   return response.json();
 }
