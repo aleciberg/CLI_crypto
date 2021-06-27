@@ -75,8 +75,13 @@ async function getCoin(query) {
   const url =
     'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
   let qString = '?CMC_PRO_API_KEY=' + apiKey + `&symbol=${query.toUpperCase()}`;
-  const response = await fetch(url + qString);
-  return response.json();
+  const response = await axios
+    .get(url + qString)
+    .then((data) => {
+      return data.data;
+    })
+    .catch((err) => console.log(err));
+  return response;
 }
 
 takeInput();
